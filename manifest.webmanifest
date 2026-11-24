@@ -1,0 +1,20 @@
+{
+  "name": "MangaTek",
+  "short_name": "MangaTek",
+  "description": "واجهة شخصية لتصفح المانجا ومتابعة القراءة",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#100d1c",
+  "theme_color": "#100d1c",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

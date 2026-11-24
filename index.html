@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100d1c">
+  <meta name="description" content="MangaTek - واجهة شخصية لتصفح المانجا ومتابعة القراءة">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <title>MangaTek</title>
+  <style>
+    :root{color-scheme:dark;--bg:#100d1c;--panel:#1b172a;--panel2:#252039;--text:#f8f5ff;--muted:#aaa2bd;--accent:#a78bfa;--accent2:#7c3aed;--line:#332b49;--danger:#fb7185}
+    [data-theme="light"]{color-scheme:light;--bg:#f6f3fb;--panel:#fff;--panel2:#eee9f8;--text:#211a31;--muted:#716981;--accent:#7c3aed;--accent2:#6d28d9;--line:#e4ddef;--danger:#e11d48}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+    button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;min-height:100vh}
+    header{padding:calc(18px + env(safe-area-inset-top)) 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{font-size:26px;font-weight:900;letter-spacing:-1px}.brand span{color:var(--accent)}
+    .icon-btn{border:1px solid var(--line);background:var(--panel);color:var(--text);width:42px;height:42px;border-radius:14px;font-size:18px}
+    main{padding:8px 16px 24px}.hero{background:linear-gradient(135deg,#5b21b6,#24134b 65%,#151126);border-radius:24px;padding:22px;min-height:168px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 14px 40px #0003}
+    .eyebrow{font-size:12px;color:#ddd0ff}.hero h1{font-size:25px;margin:8px 0}.hero p{color:#e6ddfa;font-size:13px;margin:0 0 14px}
+    .primary,.secondary{border:0;border-radius:13px;padding:12px 16px;font-weight:750}.primary{background:#fff;color:#32145f}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+    .section-head{display:flex;align-items:end;justify-content:space-between;margin:24px 2px 12px}.section-head h2{font-size:18px;margin:0}.section-head small{color:var(--muted)}
+    .search{display:flex;gap:8px;margin:18px 0}.search input{min-width:0;flex:1;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--text);outline:none}.search input:focus{border-color:var(--accent)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}
+    .cover{height:136px;background:linear-gradient(140deg,#4c1d95,#211638);display:grid;place-items:center;font-size:42px;color:#e9ddff;position:relative}
+    .cover .heart{position:absolute;top:9px;left:9px;border:0;background:#100d1cbb;color:white;border-radius:50%;width:34px;height:34px}
+    .card-body{padding:11px}.card h3{font-size:14px;margin:0 0 6px;line-height:1.5}.muted{color:var(--muted);font-size:12px}
+    .card-actions{display:flex;gap:7px;margin-top:10px}.card-actions button{flex:1;font-size:12px;padding:9px 6px}
+    .empty{padding:30px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:18px}
+    .notice{font-size:12px;color:var(--muted);line-height:1.7;margin:14px 2px}
+    .tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center}
+    .tabbar{width:min(760px,100%);display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.tab{border:0;background:transparent;color:var(--muted);padding:7px 2px;border-radius:12px;font-size:11px}.tab b{display:block;font-size:19px;margin-bottom:3px}.tab.active{background:var(--panel2);color:var(--accent)}
+    .page{display:none}.page.active{display:block}.row{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:9px}.mini-cover{width:48px;height:58px;border-radius:10px;background:linear-gradient(135deg,#6d28d9,#211638);display:grid;place-items:center;font-size:22px;flex-shrink:0}.row .grow{flex:1;min-width:0}.row strong{display:block;font-size:14px}.row small{color:var(--muted)}
+    .site-wrap{height:calc(100vh - 190px);min-height:430px;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}.site-wrap iframe{width:100%;height:100%;border:0;background:white}.site-fallback{text-align:center;padding:18px;color:var(--muted);font-size:13px}
+    .settings-item{display:flex;justify-content:space-between;align-items:center;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:15px;margin-bottom:10px}
+    .modal{position:fixed;inset:0;background:#0009;z-index:10;display:none;align-items:end;justify-content:center}.modal.show{display:flex}.sheet{width:min(760px,100%);background:var(--panel);border-radius:24px 24px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));border:1px solid var(--line)}.sheet h2{margin:0 0 8px}.sheet p{color:var(--muted);font-size:13px;line-height:1.7}.sheet .actions{display:flex;gap:8px;margin-top:16px}.sheet .actions>*{flex:1}
+    @media(min-width:600px){.cover{height:170px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div class="brand">Manga<span>Tek</span></div>
+    <button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">☾</button>
+  </header>
+  <main>
+    <section id="home" class="page active">
+      <div class="hero">
+        <div><div class="eyebrow">مكتبتك في مكان واحد</div><h1>عالم المانجا يبدأ هنا</h1><p>تابع أعمالك المفضلة وارجع لقراءتك متى ما بغيت.</p></div>
+        <div><button class="primary" onclick="showPage('site')">تصفح MangaTek ↗</button></div>
+      </div>
+      <div class="search"><input id="homeSearch" placeholder="ابحث عن عنوان مانجا..." autocomplete="off"><button class="icon-btn" onclick="showPage('search')">⌕</button></div>
+      <div class="section-head"><h2>متابعة القراءة</h2><small>آخر ما فتحته</small></div>
+      <div id="continueList"></div>
+      <div class="section-head"><h2>اقتراحات للبدء</h2><small>قائمة تجريبية</small></div>
+      <div id="homeGrid" class="grid"></div>
+      <p class="notice">ملاحظة: البطاقات المعروضة هنا أمثلة توضيحية. تصفح الموقع من تبويب «الموقع» للوصول إلى محتواه الفعلي. لا توجد مزامنة تلقائية مع حساب الموقع.</p>
+    </section>
+    <section id="search" class="page">
+      <div class="section-head"><h2>البحث</h2><small>ابحث في قائمتك</small></div>
+      <div class="search"><input id="searchInput" placeholder="اكتب اسم العمل..."></div>
+      <div id="searchResults" class="grid"></div>
+    </section>
+    <section id="favorites" class="page">
+      <div class="section-head"><h2>المفضلة</h2><small>أعمالك المحفوظة</small></div>
+      <div id="favoriteList"></div>
+    </section>
+    <section id="history" class="page">
+      <div class="section-head"><h2>سجل القراءة</h2><small>آخر الأعمال التي فتحتها</small></div>
+      <div id="historyList"></div>
+    </section>
+    <section id="site" class="page">
+      <div class="section-head"><h2>موقع MangaTek</h2><small>الموقع الأصلي</small></div>
+      <div class="site-wrap"><iframe src="https://mangatek.com" title="MangaTek website" loading="lazy"></iframe></div>
+      <div class="site-fallback">إذا لم يظهر الموقع داخل الإطار، افتحه مباشرة من هنا: <a href="https://mangatek.com" target="_blank" rel="noopener" style="color:var(--accent)">mangatek.com</a></div>
+    </section>
+    <section id="settings" class="page">
+      <div class="section-head"><h2>الإعدادات</h2><small>تحكم بتجربتك</small></div>
+      <div class="settings-item"><span>الوضع الليلي</span><button class="secondary" id="themeToggle">تبديل المظهر</button></div>
+      <div class="settings-item"><span>حفظ بياناتك</span><span class="muted">على هذا الجهاز فقط</span></div>
+      <div class="settings-item"><span>إصدار التطبيق</span><span class="muted">نسخة تجريبية 1.0</span></div>
+      <button class="secondary" style="width:100%;color:var(--danger)" id="clearBtn">مسح المفضلة وسجل القراءة</button>
+    </section>
+  </main>
+</div>
+<nav class="tabs"><div class="tabbar">
+  <button class="tab active" data-page="home"><b>⌂</b>الرئيسية</button>
+  <button class="tab" data-page="search"><b>⌕</b>بحث</button>
+  <button class="tab" data-page="favorites"><b>♡</b>المفضلة</button>
+  <button class="tab" data-page="history"><b>◷</b>السجل</button>
+  <button class="tab" data-page="site"><b>▣</b>الموقع</button>
+</div></nav>
+<div class="modal" id="installModal"><div class="sheet"><h2>إضافة MangaTek إلى الشاشة الرئيسية</h2><p>من Safari على الآيفون: اضغط زر المشاركة، ثم اختر «إضافة إلى الشاشة الرئيسية»، وبعدها اضغط «إضافة».</p><div class="actions"><button class="primary" id="closeModal">حسناً</button></div></div></div>
+<script>
+const mangas=[
+ {id:'onepiece',title:'One Piece',genre:'مغامرة • شونين',emoji:'🏴‍☠️'},
+ {id:'sololeveling',title:'Solo Leveling',genre:'أكشن • فانتازيا',emoji:'⚔️'},
+ {id:'jujutsu',title:'Jujutsu Kaisen',genre:'أكشن • خارق للطبيعة',emoji:'👁️'},
+ {id:'magicemperor',title:'Magic Emperor',genre:'فنون قتالية • فانتازيا',emoji:'🐉'},
+ {id:'pendragon',title:'White Dragon Duke: Pendragon',genre:'فانتازيا • مغامرة',emoji:'🐲'},
+ {id:'naruto',title:'Naruto',genre:'مغامرة • شونين',emoji:'🍥'}
+];
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem('mt_'+k))??d}catch{return d}};
+const set=(k,v)=>localStorage.setItem('mt_'+k,JSON.stringify(v));
+let favorites=get('favorites',[]), history=get('history',[]), progress=get('progress',{}), theme=get('theme','dark');
+function applyTheme(){document.documentElement.dataset.theme=theme;document.querySelector('#themeBtn').textContent=theme==='dark'?'☀':'☾';set('theme',theme)}
+function toggleTheme(){theme=theme==='dark'?'light':'dark';applyTheme()}
+function showPage(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.page===id));render()}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+document.querySelector('#themeBtn').onclick=toggleTheme;document.querySelector('#themeToggle').onclick=toggleTheme;
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];set('favorites',favorites);render()}
+function markRead(id){history=[id,...history.filter(x=>x!==id)];progress[id]='آخر زيارة';set('history',history);set('progress',progress);render();document.querySelector('#installModal').classList.add('show')}
+function card(m){return `<article class="card"><div class="cover">${m.emoji}<button class="heart" onclick="toggleFav('${m.id}')" aria-label="المفضلة">${favorites.includes(m.id)?'♥':'♡'}</button></div><div class="card-body"><h3>${m.title}</h3><div class="muted">${m.genre}</div><div class="card-actions"><button class="secondary" onclick="markRead('${m.id}')">متابعة</button><button class="secondary" onclick="toggleFav('${m.id}')">${favorites.includes(m.id)?'إزالة':'حفظ ♡'}</button></div></div></article>`}
+function row(m){return `<div class="row"><div class="mini-cover">${m.emoji}</div><div class="grow"><strong>${m.title}</strong><small>${progress[m.id]||m.genre}</small></div><button class="secondary" onclick="markRead('${m.id}')">فتح</button></div>`}
+function empty(msg){return `<div class="empty">${msg}</div>`}
+function render(){
+ document.querySelector('#homeGrid').innerHTML=mangas.slice(0,4).map(card).join('');
+ const last=history.map(id=>mangas.find(m=>m.id===id)).filter(Boolean);
+ document.querySelector('#continueList').innerHTML=last.length?row(last[0]):empty('ما عندك قراءة سابقة. افتح عملاً من الاقتراحات أو تصفح الموقع.');
+ const q=(document.querySelector('#searchInput').value||'').trim().toLowerCase();
+ const hq=(document.querySelector('#homeSearch').value||'').trim().toLowerCase();
+ document.querySelector('#searchResults').innerHTML=(q?mangas.filter(m=>m.title.toLowerCase().includes(q)||m.genre.toLowerCase().includes(q)):mangas).map(card).join('')||empty('ما لقينا نتائج مطابقة.');
+ document.querySelector('#favoriteList').innerHTML=favorites.map(id=>mangas.find(m=>m.id===id)).filter(Boolean).map(row).join('')||empty('قائمة المفضلة فارغة حالياً.');
+ document.querySelector('#historyList').innerHTML=last.map(row).join('')||empty('سجل القراءة فارغ حالياً.');
+}
+document.querySelector('#searchInput').addEventListener('input',render);
+document.querySelector('#homeSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){document.querySelector('#searchInput').value=e.target.value;showPage('search')}});
+document.querySelector('#clearBtn').onclick=()=>{if(confirm('متأكد من مسح المفضلة وسجل القراءة؟')){favorites=[];history=[];progress={};set('favorites',favorites);set('history',history);set('progress',progress);render()}};
+document.querySelector('#closeModal').onclick=()=>document.querySelector('#installModal').classList.remove('show');
+applyTheme();render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
+</script>
+</body></html>
